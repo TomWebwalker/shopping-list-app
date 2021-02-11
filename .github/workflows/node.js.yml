@@ -1,4 +1,6 @@
-name: Node.js CI
+name: Shopping list app CI
+
+
 
 on:
   push:
@@ -7,24 +9,79 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
 
+  
+
+  setup:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [15.x]
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - name: Release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npx semantic-release
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 15.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.0
+      
+      - name: Install dependencies
+        run: npm ci      
+        
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: node_modules
+          path: node_modules
+          retention-minutes: 30        
+  
+
+
+
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 15.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.0
+      - name: Download node modules
+        uses: actions/download-artifact@v2
+        with:
+          name: node_modules
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build -- --prod
+      - name: Test
+        run: npm test -- --no-watch
+  
+  # release:
+  
+  # deploy:
+  
+
+
+
+
+
+  # build:
+
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Use Node.js 15.0
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: 15.0
+    
+  #   - name: Install dependencies
+  #     run: npm ci
+    
+    
+  #   - run: npm run build --if-present
+  #   - name: Release
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  #     run: npx semantic-release
