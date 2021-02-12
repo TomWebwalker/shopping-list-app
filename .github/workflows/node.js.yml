@@ -79,7 +79,7 @@ jobs:
       - name: Install dependencies
         run: npm ci              
       - name: Test
-        run: npm test -- --no-watch
+        run: npm test -- --configuration=ci
   
   # release:
   

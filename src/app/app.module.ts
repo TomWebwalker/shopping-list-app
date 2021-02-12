@@ -6,15 +6,9 @@ import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 
 @NgModule({
-  declarations: [	
-    AppComponent,
-      TopBarComponent
-   ],
-  imports: [
-    BrowserModule,
-    TuiRootModule
-  ],
+  declarations: [AppComponent, TopBarComponent],
+  imports: [BrowserModule, TuiRootModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
