@@ -41,11 +41,7 @@ jobs:
     needs: setup
     steps:
       - uses: actions/checkout@v2
-
-      - name: Use Node.js 15.0
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15.0
+      - uses: actions/setup-node@v1
       - name: Install dependencies
         if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm ci              
@@ -57,11 +53,7 @@ jobs:
     needs: setup
     steps:
       - uses: actions/checkout@v2
-
-      - name: Use Node.js 15.0
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15.0
+      - uses: actions/setup-node@v1
       - name: Install dependencies
         if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm ci              
@@ -73,11 +65,7 @@ jobs:
     needs: setup
     steps:
       - uses: actions/checkout@v2
-
-      - name: Use Node.js 15.0
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15.0
+      - uses: actions/setup-node@v1
       - name: Install dependencies
         if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm ci              
